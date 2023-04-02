@@ -1,4 +1,4 @@
-## MERN Blog Site - [Live Version](#mern-blog-site---live-version)
+## MERN Blog Site - [Live Version](https://mern-blog-site.vercel.app/)
 
 ### Tech Stack
 - React with Typescript ( Frontend )
