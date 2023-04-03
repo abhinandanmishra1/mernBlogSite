@@ -55,7 +55,10 @@ app.use((req, res, next) => {
 // API routes
 app.post("/api/blogs", async (req, res) => {
   const { title, image, description } = req.body;
-  console.log(req.body);
+  if(!title || !image || !description){
+    res.status(500).json({error: 'Please send all the fields'});
+    return;
+  }
 
   try {
     const blog = new Blog({ title, image, description });
@@ -80,9 +83,13 @@ app.get("/api/blogs/:id", async (req, res) => {
 
   try {
     const blog = await Blog.findById(id);
+    if(!blog) {
+      res.status(404).send({error: 'Blogpost doesn\' exist'});
+      return;
+    }
     res.json(blog);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 });
 
@@ -96,6 +103,12 @@ app.put("/api/blogs/:id", async (req, res) => {
       { title, image, description },
       { new: true }
     );
+
+    if(!blog) {
+      res.status(404).send({error: 'Blogpost doesn\' exist'});
+      return;
+    }
+
     res.json(blog);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -106,7 +119,13 @@ app.delete("/api/blogs/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    await Blog.findByIdAndDelete(id);
+    const blog = await Blog.findByIdAndDelete(id);
+
+    if(!blog) {
+      res.status(404).send({error: 'Blogpost doesn\' exist'});
+      return;
+    }
+    
     res.status(204).end();
   } catch (error) {
     res.status(500).json({ error: error.message });
