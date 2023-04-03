@@ -27,3 +27,6 @@ Blog {
 
 // image has been stored as base64 string
 ```
+
+### Testing [Jest Library]
+![image](https://user-images.githubusercontent.com/64205626/229556809-db516295-92aa-4004-8b44-40fcd45199f5.png)
